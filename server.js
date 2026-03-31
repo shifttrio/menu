@@ -9,11 +9,11 @@ const PORT = process.env.PORT || 3000;
 
 // ── PostgreSQL ulanish ─────────────────────────────────────────────────────────
 const pool = new Pool({
-  host:     process.env.PG_HOST     || 'localhost',
-  port:     Number(process.env.PG_PORT) || 5432,
-  database: process.env.PG_DATABASE || 'torthouse',
+  host:     process.env.PG_HOST     || 'centerbeam.proxy.rlwy.net',
+  port:     Number(process.env.PG_PORT) || 52009,
+  database: process.env.PG_DATABASE || 'railway',
   user:     process.env.PG_USER     || 'postgres',
-  password: process.env.PG_PASSWORD || '',
+  password: process.env.PG_PASSWORD || 'mbWGYQiPiLIfkzkmxCndaliSqxMedJsa',
   ssl:      process.env.PG_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
