@@ -2,128 +2,190 @@ require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
 const path    = require('path');
-const fs      = require('fs');
-const XLSX    = require('xlsx');
+const { Pool } = require('pg');
 
-const app      = express();
-const PORT     = process.env.PORT || 3000;
-const DATA_DIR = path.join(__dirname, 'data');
-const DATA_FILE= path.join(DATA_DIR, 'mahsulotlar.xlsx');
+const app  = express();
+const PORT = process.env.PORT || 3000;
 
-fs.mkdirSync(DATA_DIR, { recursive: true });
+// ── PostgreSQL ulanish ─────────────────────────────────────────────────────────
+const pool = new Pool({
+  host:     process.env.PG_HOST     || 'localhost',
+  port:     Number(process.env.PG_PORT) || 5432,
+  database: process.env.PG_DATABASE || 'torthouse',
+  user:     process.env.PG_USER     || 'postgres',
+  password: process.env.PG_PASSWORD || '',
+  ssl:      process.env.PG_SSL === 'true' ? { rejectUnauthorized: false } : false,
+});
+
+// ── Jadval yaratish (agar mavjud bo'lmasa) ─────────────────────────────────────
+async function initDB() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS mahsulotlar (
+      id         SERIAL PRIMARY KEY,
+      nomi       TEXT        NOT NULL DEFAULT '',
+      narxi      NUMERIC     NOT NULL DEFAULT 0,
+      kategoriya TEXT        NOT NULL DEFAULT '',
+      porsiya    TEXT                 DEFAULT '',
+      tavsif     TEXT                 DEFAULT '',
+      tarkibi    TEXT                 DEFAULT '',
+      mavjud     BOOLEAN     NOT NULL DEFAULT TRUE,
+      rasmlar    TEXT                 DEFAULT '',
+      video      TEXT                 DEFAULT '',
+      sana       DATE        NOT NULL DEFAULT CURRENT_DATE
+    );
+  `);
+  console.log('✅ Jadval tayyor: mahsulotlar');
+}
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ── EXCEL HELPERS ──────────────────────────────────────────────────────────────
-const COLS = ['id','nomi','narxi','kategoriya','porsiya','tavsif','tarkibi','mavjud','rasmlar','video','sana'];
-
-function readSheet() {
-  if (!fs.existsSync(DATA_FILE)) return [];
-  try {
-    const wb = XLSX.readFile(DATA_FILE);
-    const ws = wb.Sheets[wb.SheetNames[0]];
-    return XLSX.utils.sheet_to_json(ws, { defval: '' });
-  } catch(e) {
-    console.error('readSheet xato:', e.message);
-    return [];
-  }
-}
-
-function writeSheet(rows) {
-  const wb = XLSX.utils.book_new();
-  const ws = rows.length
-    ? XLSX.utils.json_to_sheet(rows)
-    : XLSX.utils.aoa_to_sheet([COLS]);
-  ws['!cols'] = [{wch:6},{wch:25},{wch:14},{wch:16},{wch:14},{wch:50},{wch:25},{wch:10},{wch:80},{wch:60},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, ws, 'Mahsulotlar');
-  XLSX.writeFile(wb, DATA_FILE);
-}
-
-function nextId(rows) {
-  if (!rows.length) return 1;
-  return Math.max(...rows.map(r => Number(r.id) || 0)) + 1;
-}
-
-function buildItem(body, base) {
-  return {
-    id:         base.id,
-    nomi:       body.nomi       !== undefined ? body.nomi       : (base.nomi       || ''),
-    narxi:      body.narxi      !== undefined ? Number(body.narxi) : (Number(base.narxi) || 0),
-    kategoriya: body.kategoriya !== undefined ? body.kategoriya : (base.kategoriya || ''),
-    porsiya:    body.porsiya    !== undefined ? body.porsiya    : (base.porsiya    || ''),
-    tavsif:     body.tavsif     !== undefined ? body.tavsif     : (base.tavsif     || ''),
-    tarkibi:    body.tarkibi    !== undefined ? body.tarkibi    : (base.tarkibi    || ''),
-    mavjud:     body.mavjud     !== undefined ? body.mavjud     : (base.mavjud     !== undefined ? base.mavjud : true),
-    rasmlar:    body.rasmlar    !== undefined
-                  ? (Array.isArray(body.rasmlar) ? body.rasmlar.join(',') : String(body.rasmlar || ''))
-                  : (base.rasmlar || ''),
-    video:      body.video      !== undefined ? body.video      : (base.video      || ''),
-    sana:       base.sana || new Date().toISOString().slice(0, 10),
-  };
-}
-
 // ── API ────────────────────────────────────────────────────────────────────────
 
-app.get('/api/mahsulotlar', (req, res) => {
-  try { res.json(readSheet()); }
-  catch(e) { console.error('GET all:', e.message); res.status(500).json({error: e.message}); }
-});
-
-app.get('/api/mahsulotlar/kategoriya/:cat', (req, res) => {
-  try { res.json(readSheet().filter(r => r.kategoriya === req.params.cat)); }
-  catch(e) { res.status(500).json({error: e.message}); }
-});
-
-app.get('/api/mahsulotlar/:id', (req, res) => {
+// Barcha mahsulotlar
+app.get('/api/mahsulotlar', async (req, res) => {
   try {
-    const item = readSheet().find(r => String(r.id) === String(req.params.id));
-    if (!item) return res.status(404).json({error: 'Topilmadi'});
-    res.json(item);
-  } catch(e) { res.status(500).json({error: e.message}); }
+    const { rows } = await pool.query('SELECT * FROM mahsulotlar ORDER BY id ASC');
+    res.json(rows);
+  } catch(e) {
+    console.error('GET all:', e.message);
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.post('/api/mahsulotlar', (req, res) => {
+// Kategoriya bo'yicha
+app.get('/api/mahsulotlar/kategoriya/:cat', async (req, res) => {
   try {
-    const rows = readSheet();
-    const item = buildItem(req.body, { id: nextId(rows), sana: new Date().toISOString().slice(0,10) });
-    rows.push(item);
-    writeSheet(rows);
-    console.log('POST qoshildi:', item.nomi);
-    res.json({success: true, item});
-  } catch(e) { console.error('POST xato:', e.message); res.status(500).json({error: e.message}); }
+    const { rows } = await pool.query(
+      'SELECT * FROM mahsulotlar WHERE kategoriya = $1 ORDER BY id ASC',
+      [req.params.cat]
+    );
+    res.json(rows);
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.put('/api/mahsulotlar/:id', (req, res) => {
+// Bitta mahsulot
+app.get('/api/mahsulotlar/:id', async (req, res) => {
   try {
-    const rows = readSheet();
-    const idx  = rows.findIndex(r => String(r.id) === String(req.params.id));
-    if (idx === -1) return res.status(404).json({error: 'Topilmadi'});
-    const updated = buildItem(req.body, rows[idx]);
-    rows[idx] = updated;
-    writeSheet(rows);
-    console.log('PUT yangilandi:', updated.nomi);
-    res.json({success: true, item: updated});
-  } catch(e) { console.error('PUT xato:', e.message); res.status(500).json({error: e.message}); }
+    const { rows } = await pool.query(
+      'SELECT * FROM mahsulotlar WHERE id = $1',
+      [req.params.id]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Topilmadi' });
+    res.json(rows[0]);
+  } catch(e) {
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.delete('/api/mahsulotlar/:id', (req, res) => {
+// Yangi mahsulot qo'shish
+app.post('/api/mahsulotlar', async (req, res) => {
   try {
-    const rows     = readSheet();
-    const filtered = rows.filter(r => String(r.id) !== String(req.params.id));
-    if (filtered.length === rows.length) return res.status(404).json({error: 'Topilmadi'});
-    writeSheet(filtered);
+    const b = req.body;
+    const rasmlar = Array.isArray(b.rasmlar) ? b.rasmlar.join(',') : String(b.rasmlar || '');
+    const mavjud  = b.mavjud !== undefined ? b.mavjud : true;
+
+    const { rows } = await pool.query(
+      `INSERT INTO mahsulotlar
+         (nomi, narxi, kategoriya, porsiya, tavsif, tarkibi, mavjud, rasmlar, video, sana)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,CURRENT_DATE)
+       RETURNING *`,
+      [
+        b.nomi       || '',
+        Number(b.narxi) || 0,
+        b.kategoriya || '',
+        b.porsiya    || '',
+        b.tavsif     || '',
+        b.tarkibi    || '',
+        mavjud,
+        rasmlar,
+        b.video      || '',
+      ]
+    );
+    console.log('POST qoshildi:', rows[0].nomi);
+    res.json({ success: true, item: rows[0] });
+  } catch(e) {
+    console.error('POST xato:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Mahsulotni yangilash
+app.put('/api/mahsulotlar/:id', async (req, res) => {
+  try {
+    const b = req.body;
+    const rasmlar = Array.isArray(b.rasmlar) ? b.rasmlar.join(',') : String(b.rasmlar || '');
+
+    const { rows } = await pool.query(
+      `UPDATE mahsulotlar SET
+         nomi       = $1,
+         narxi      = $2,
+         kategoriya = $3,
+         porsiya    = $4,
+         tavsif     = $5,
+         tarkibi    = $6,
+         mavjud     = $7,
+         rasmlar    = $8,
+         video      = $9
+       WHERE id = $10
+       RETURNING *`,
+      [
+        b.nomi       || '',
+        Number(b.narxi) || 0,
+        b.kategoriya || '',
+        b.porsiya    || '',
+        b.tavsif     || '',
+        b.tarkibi    || '',
+        b.mavjud !== undefined ? b.mavjud : true,
+        rasmlar,
+        b.video      || '',
+        req.params.id,
+      ]
+    );
+    if (!rows.length) return res.status(404).json({ error: 'Topilmadi' });
+    console.log('PUT yangilandi:', rows[0].nomi);
+    res.json({ success: true, item: rows[0] });
+  } catch(e) {
+    console.error('PUT xato:', e.message);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Mahsulotni o'chirish
+app.delete('/api/mahsulotlar/:id', async (req, res) => {
+  try {
+    const { rowCount } = await pool.query(
+      'DELETE FROM mahsulotlar WHERE id = $1',
+      [req.params.id]
+    );
+    if (!rowCount) return res.status(404).json({ error: 'Topilmadi' });
     console.log('DELETE id:', req.params.id);
-    res.json({success: true});
-  } catch(e) { console.error('DELETE xato:', e.message); res.status(500).json({error: e.message}); }
+    res.json({ success: true });
+  } catch(e) {
+    console.error('DELETE xato:', e.message);
+    res.status(500).json({ error: e.message });
+  }
 });
 
-app.get('/api/export', (req, res) => {
+// Excel export (pg-dan yuklab olish)
+app.get('/api/export', async (req, res) => {
   try {
-    if (!fs.existsSync(DATA_FILE)) writeSheet([]);
-    res.download(DATA_FILE, 'mahsulotlar.xlsx');
-  } catch(e) { res.status(500).json({error: e.message}); }
+    const XLSX = require('xlsx');
+    const { rows } = await pool.query('SELECT * FROM mahsulotlar ORDER BY id ASC');
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(rows);
+    XLSX.utils.book_append_sheet(wb, ws, 'Mahsulotlar');
+    const buf = XLSX.write(wb, { type: 'buffer', bookType: 'xlsx' });
+    res.setHeader('Content-Disposition', 'attachment; filename="mahsulotlar.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.send(buf);
+  } catch(e) {
+    console.error('Export xato:', e.message);
+    res.status(500).json({ error: e.message });
+  }
 });
 
 // SPA fallback
@@ -132,6 +194,14 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`Server: http://localhost:${PORT}`);
-});
+// ── START ──────────────────────────────────────────────────────────────────────
+initDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server: http://localhost:${PORT}`);
+    });
+  })
+  .catch(e => {
+    console.error('❌ DB ulanishda xato:', e.message);
+    process.exit(1);
+  });
