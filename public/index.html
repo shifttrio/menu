@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TORT HOUSE — Menyu</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --c0:#0d0608;
+  --c1:#1a080e;
+  --burgundy:#6B0F2B;
+  --wine:#8B1a38;
+  --rose:#C4637A;
+  --blush:#E8A4B4;
+  --petal:#F5D5DE;
+  --cream:#FDF4EF;
+  --warm:#FAF0EA;
+  --linen:#F7EBE3;
+  --sand:#E8D5C4;
+  --taupe:#C4A08C;
+  --mocha:#8C6450;
+  --espresso:#6B0F2B;
+  --white:#FFFDFB;
+  --text:#2A1510;
+  --text2:#7A5048;
+  --card-bg:#FFFDFB;
+  --shadow:rgba(107,15,43,0.12);
+  --shadow-deep:rgba(107,15,43,0.22);
+  
+  --r1:16px;
+  --r2:24px;
+  --r3:40px;
+}
+
+/* RESET + BASE */
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  font-family:'DM Sans',sans-serif;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* HERO HEADER */
+.hero{
+  position:relative;
+  min-height:380px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:70px 20px 60px;
+  overflow:hidden;
+  background: linear-gradient(170deg,#3D0F1F 0%,#6B0F2B 40%,#8B2040 70%,#A0304E 100%);
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 20%, rgba(255,180,160,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 50% at 80% 80%, rgba(200,100,120,0.1) 0%,transparent 60%);
+  pointer-events:none;
+}
+.hero-pattern{
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,220,200,0.07) 1px, transparent 0);
+  background-size:32px 32px;
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.18);
+  color:var(--petal);
+  font-size:.72rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  padding:7px 18px;
+  border-radius:30px;
+  margin-bottom:22px;
+  backdrop-filter:blur(8px);
+}
+.hero-icon{
+  width:88px;
+  height:88px;
+  background:rgba(255,255,255,0.1);
+  border:2px solid rgba(255,220,210,0.3);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2.4rem;
+  margin:0 auto 20px;
+  box-shadow:0 0 0 8px rgba(255,255,255,0.04), 0 12px 40px rgba(0,0,0,0.3);
+  animation:pulse-ring 3s ease-in-out infinite;
+}
+@keyframes pulse-ring{
+  0%,100%{box-shadow:0 0 0 8px rgba(255,255,255,0.04),0 12px 40px rgba(0,0,0,0.3)}
+  50%{box-shadow:0 0 0 14px rgba(255,255,255,0.06),0 12px 40px rgba(0,0,0,0.3)}
+}
+
+/* LOGO */
+.hero-logo{
+  position:relative;
+  width:100px;
+  height:100px;
+  margin:0 auto 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,0.1);
+  border:2px solid rgba(255,220,210,0.3);
+  border-radius:50%;
+  box-shadow:
+    0 0 0 8px rgba(255,255,255,0.04),
+    0 12px 40px rgba(0,0,0,0.3);
+  animation:pulse-ring 3s ease-in-out infinite;
+  overflow:hidden;
+}
+/* Nur taralish effekti */
+.hero-logo::before{
+  content:'';
+  position:absolute;
+  inset:-60px;
+  background:radial-gradient(circle, rgba(255,200,180,0.35) 0%, rgba(196,99,122,0.18) 40%, transparent 70%);
+  border-radius:50%;
+  pointer-events:none;
+  animation:glow-pulse 3s ease-in-out infinite;
+  z-index:-1;
+}
+.hero-logo::after{
+  content:'';
+  position:absolute;
+  inset:-30px;
+  background:radial-gradient(circle, rgba(255,230,210,0.2) 0%, transparent 65%);
+  border-radius:50%;
+  pointer-events:none;
+  animation:glow-pulse 3s ease-in-out infinite reverse;
+  z-index:-1;
+}
+@keyframes glow-pulse{
+  0%,100%{opacity:0.7;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.12)}
+}
+.hero-logo img{
+  width:70%;
+  height:70%;
+  object-fit:contain;
+  display:block;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+}
+.hero h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,8vw,5rem);
+  font-weight:300;
+  color:#fff;
+  letter-spacing:.12em;
+  line-height:1;
+  margin-bottom:10px;
+  text-shadow:0 2px 30px rgba(0,0,0,0.3);
+}
+.hero h1 em{
+  font-style:italic;
+  font-weight:400;
+  color:var(--petal);
+}
+.hero h1 em strong{
+  font-weight:700;
+  font-style:italic;
+}
+.hero-sub{
+  font-size:.82rem;
+  color:rgba(245,213,222,0.75);
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  font-weight:400;
+}
+.hero-divider{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin:22px auto 0;
+  color:rgba(245,213,222,0.5);
+  font-size:.8rem;
+  letter-spacing:.2em;
+}
+.hero-divider::before,.hero-divider::after{
+  content:'';
+  display:block;
+  height:1px;
+  width:60px;
+  background:linear-gradient(90deg,transparent,rgba(245,213,222,0.4));
+}
+.hero-divider::before{background:linear-gradient(90deg,transparent,rgba(245,213,222,0.4))}
+.hero-divider::after{background:linear-gradient(90deg,rgba(245,213,222,0.4),transparent)}
+.hero-wave{
+  position:absolute;
+  bottom:-1px;
+  left:0;
+  right:0;
+  height:60px;
+  overflow:hidden;
+}
+.hero-wave svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* NAV */
+.cats{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:18px 20px;
+  justify-content:center;
+  flex-wrap:wrap;
+  background:var(--white);
+  border-bottom:1px solid var(--petal);
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 4px 20px var(--shadow);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.cats::-webkit-scrollbar{display:none}
+.cat-btn{
+  border:1.5px solid var(--sand);
+  background:transparent;
+  color:var(--mocha);
+  padding:9px 20px;
+  border-radius:50px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem;
+  font-weight:500;
+  letter-spacing:.05em;
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.cat-btn:hover{
+  border-color:var(--rose);
+  color:var(--burgundy);
+  background:var(--petal);
+}
+.cat-btn.active{
+  background:var(--burgundy);
+  border-color:var(--burgundy);
+  color:#fff;
+  box-shadow:0 4px 14px rgba(107,15,43,0.3);
+}
+
+/* SECTION HEAD */
+.sec-head{
+  text-align:center;
+  padding:50px 20px 16px;
+  position:relative;
+}
+.sec-head-inner{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+}
+.sec-head h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  color:var(--burgundy);
+  font-weight:400;
+  font-style:italic;
+  letter-spacing:.04em;
+  line-height:1.1;
+}
+.sec-label{
+  font-size:.7rem;
+  color:var(--taupe);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-weight:500;
+}
+.sec-ornament{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:var(--blush);
+  font-size:.75rem;
+  margin-top:6px;
+}
+.sec-ornament::before,.sec-ornament::after{
+  content:'';
+  display:block;
+  height:1px;
+  width:40px;
+  background:var(--blush);
+}
+
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:20px;
+  padding:16px 24px 64px;
+  max-width:1160px;
+  margin:0 auto;
+}
+
+/* CARD */
+.card{
+  background:var(--card-bg);
+  border-radius:var(--r2);
+  overflow:hidden;
+  box-shadow:0 2px 12px var(--shadow);
+  transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s;
+  display:flex;
+  flex-direction:column;
+  animation:fadeUp .5s ease both;
+  border:1px solid rgba(232,164,180,0.2);
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 50px var(--shadow-deep);
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.card-img-wrap{
+  position:relative;
+  width:100%;
+  height:210px;
+  overflow:hidden;
+  cursor:pointer;
+  flex-shrink:0;
+  background:var(--linen);
+}
+.card-img-wrap::after{
+  content:'🔍';
+  position:absolute;
+  inset:0;
+  background:rgba(107,15,43,0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6rem;
+  opacity:0;
+  transition:all .3s;
+  backdrop-filter:blur(0px);
+}
+.card-img-wrap:hover::after{
+  background:rgba(107,15,43,0.35);
+  opacity:1;
+  backdrop-filter:blur(3px);
+}
+.card-img-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);
+  display:block;
+}
+.card-img-wrap:hover img{transform:scale(1.08)}
+.card-emoji{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:4rem;
+}
+.unavail-badge{
+  position:absolute;
+  top:12px;
+  right:12px;
+  background:rgba(107,15,43,0.88);
+  color:#fff;
+  font-size:.68rem;
+  padding:4px 12px;
+  border-radius:20px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-weight:500;
+  backdrop-filter:blur(4px);
+}
+.card-tag{
+  position:absolute;
+  top:12px;
+  left:12px;
+  background:rgba(255,253,251,0.92);
+  color:var(--burgundy);
+  font-size:.68rem;
+  padding:4px 10px;
+  border-radius:20px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:600;
+  backdrop-filter:blur(4px);
+  border:1px solid rgba(232,164,180,0.4);
+}
+
+.card-body{
+  padding:18px 20px 20px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.card-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  color:var(--text);
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:.01em;
+}
+.card-desc{
+  font-size:.78rem;
+  color:var(--text2);
+  line-height:1.6;
+  flex:1;
+}
+.card-porsiya{
+  font-size:.72rem;
+  color:var(--taupe);
+  letter-spacing:.05em;
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+.card-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:auto;
+  padding-top:12px;
+  border-top:1px solid var(--linen);
+}
+.price{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  color:var(--burgundy);
+  font-weight:600;
+  letter-spacing:.02em;
+}
+.price-sub{font-size:.72rem;color:var(--taupe);font-family:'DM Sans',serif;font-weight:400;letter-spacing:.03em}
+
+.add-btn{
+  background:var(--burgundy);
+  color:#fff;
+  border:none;
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  font-size:1.4rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+  box-shadow:0 4px 14px rgba(107,15,43,0.3);
+  line-height:1;
+}
+.add-btn:hover{
+  background:var(--espresso);
+  transform:scale(1.12) rotate(90deg);
+  box-shadow:0 6px 20px rgba(107,15,43,0.45);
+}
+.add-btn:active{transform:scale(0.95)}
+.add-btn:disabled{background:var(--sand);cursor:not-allowed;box-shadow:none}
+
+/* IN-CART INDICATOR */
+.card.in-cart .card-img-wrap::before{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--rose),var(--burgundy));
+  z-index:2;
+}
+
+/* LIGHTBOX */
+.lb{
+  position:fixed;
+  inset:0;
+  background:rgba(15,5,8,0.92);
+  z-index:500;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  backdrop-filter:blur(6px);
+}
+.lb.open{display:flex;animation:lbIn .25s ease}
+@keyframes lbIn{from{opacity:0}to{opacity:1}}
+.lb-inner{
+  position:relative;
+  max-width:min(680px,95vw);
+  width:100%;
+  background:var(--white);
+  border-radius:var(--r2);
+  overflow:hidden;
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  animation:lbSlide .3s cubic-bezier(.22,.7,.36,1);
+}
+@keyframes lbSlide{from{transform:scale(.9) translateY(20px)}to{transform:scale(1) translateY(0)}}
+.lb-media{
+  width:100%;
+  background:var(--linen);
+  position:relative;
+}
+.lb-media img,.lb-media video{
+  width:100%;
+  max-height:60vh;
+  object-fit:contain;
+  display:block;
+}
+.lb-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  background:rgba(107,15,43,0.9);
+  color:#fff;
+  border:none;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  font-size:1.1rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+  transition:all .2s;
+  backdrop-filter:blur(4px);
+}
+.lb-close:hover{background:var(--espresso);transform:scale(1.1)}
+.lb-info{padding:18px 22px 22px}
+.lb-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  color:var(--text);
+  font-weight:500;
+  margin-bottom:6px;
+}
+.lb-desc{font-size:.82rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.lb-footer{display:flex;align-items:center;justify-content:space-between}
+.lb-price{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--burgundy);font-weight:600}
+.lb-add{
+  background:var(--burgundy);
+  color:#fff;
+  border:none;
+  padding:11px 24px;
+  border-radius:50px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.85rem;
+  font-weight:500;
+  letter-spacing:.06em;
+  cursor:pointer;
+  transition:all .22s;
+  box-shadow:0 4px 16px rgba(107,15,43,0.3);
+}
+.lb-add:hover{background:var(--espresso);transform:translateY(-2px)}
+.lb-thumbs{
+  display:flex;
+  gap:8px;
+  padding:0 22px 18px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.lb-thumbs::-webkit-scrollbar{display:none}
+.lb-thumb{
+  width:56px;
+  height:56px;
+  border-radius:10px;
+  object-fit:cover;
+  cursor:pointer;
+  border:2.5px solid transparent;
+  transition:border-color .2s;
+  flex-shrink:0;
+}
+.lb-thumb.active{border-color:var(--rose)}
+.lb-thumb-vid{
+  width:56px;height:56px;border-radius:10px;
+  background:var(--linen);border:2.5px solid transparent;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;cursor:pointer;flex-shrink:0;
+  transition:border-color .2s;
+}
+.lb-thumb-vid.active{border-color:var(--rose)}
+
+/* CART FAB */
+.cart-fab{
+  position:fixed;
+  bottom:28px;
+  right:24px;
+  background:linear-gradient(135deg,var(--wine),var(--burgundy));
+  color:#fff;
+  border:none;
+  padding:14px 24px;
+  border-radius:60px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.88rem;
+  font-weight:500;
+  letter-spacing:.06em;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(107,15,43,0.5), 0 2px 8px rgba(107,15,43,0.3);
+  display:none;
+  align-items:center;
+  gap:10px;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  z-index:100;
+  border:1px solid rgba(255,255,255,0.15);
+}
+.cart-fab:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 14px 40px rgba(107,15,43,0.6);
+}
+.cart-fab:active{transform:scale(0.97)}
+.cart-count{
+  background:rgba(255,255,255,0.2);
+  border:1px solid rgba(255,255,255,0.3);
+  color:#fff;
+  border-radius:50%;
+  width:24px;
+  height:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:.75rem;
+  font-weight:700;
+  flex-shrink:0;
+}
+
+/* OVERLAY */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(20,5,10,0.55);
+  z-index:200;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .35s;
+  backdrop-filter:blur(2px);
+}
+.overlay.open{opacity:1;pointer-events:all}
+
+/* DRAWER */
+.drawer{
+  position:fixed;
+  right:0;top:0;bottom:0;
+  width:min(400px,100vw);
+  background:var(--white);
+  z-index:300;
+  transform:translateX(110%);
+  transition:transform .38s cubic-bezier(.22,.7,.36,1);
+  display:flex;
+  flex-direction:column;
+  box-shadow:-10px 0 60px rgba(107,15,43,0.2);
+}
+.drawer.open{transform:translateX(0)}
+
+.drawer-head{
+  padding:28px 22px 20px;
+  background:linear-gradient(135deg,var(--burgundy),var(--wine));
+  color:#fff;
+  position:relative;
+}
+.drawer-head h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem;
+  font-weight:400;
+  font-style:italic;
+  letter-spacing:.05em;
+}
+.drawer-head p{
+  font-size:.75rem;
+  color:rgba(255,220,210,0.7);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-top:3px;
+}
+.close-btn{
+  position:absolute;
+  top:22px;right:18px;
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff;
+  width:34px;height:34px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.close-btn:hover{background:rgba(255,255,255,0.25)}
+
+.drawer-items{
+  flex:1;
+  overflow-y:auto;
+  padding:12px 20px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--sand) transparent;
+}
+.drawer-items::-webkit-scrollbar{width:4px}
+.drawer-items::-webkit-scrollbar-track{background:transparent}
+.drawer-items::-webkit-scrollbar-thumb{background:var(--sand);border-radius:4px}
+
+.cart-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid var(--linen);
+  animation:fadeUp .3s ease both;
+}
+.ci-thumb{
+  width:52px;height:52px;
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+  background:var(--linen);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+}
+.ci-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ci-info{flex:1;min-width:0}
+.ci-name{
+  font-size:.88rem;
+  font-weight:500;
+  color:var(--text);
+  margin-bottom:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.ci-price{font-size:.75rem;color:var(--taupe)}
+.qty-ctrl{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.qty-btn{
+  background:var(--linen);
+  border:1px solid var(--sand);
+  color:var(--burgundy);
+  width:28px;height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;
+  flex-shrink:0;
+  line-height:1;
+}
+.qty-btn:hover{background:var(--petal);border-color:var(--rose)}
+.qty-val{
+  font-size:.9rem;font-weight:600;
+  min-width:18px;text-align:center;
+  color:var(--text);
+}
+
+.drawer-foot{
+  padding:18px 22px 28px;
+  border-top:1px solid var(--linen);
+  background:var(--warm);
+}
+.total-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:16px;
+}
+.total-label{font-size:.78rem;color:var(--taupe);text-transform:uppercase;letter-spacing:.12em}
+.total-sum{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  color:var(--burgundy);
+  font-weight:600;
+}
+.order-btn{
+  width:100%;
+  background:linear-gradient(135deg,var(--wine),var(--burgundy));
+  color:#fff;
+  border:none;
+  padding:15px;
+  border-radius:var(--r1);
+  font-family:'DM Sans',sans-serif;
+  font-size:.9rem;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .22s;
+  box-shadow:0 4px 18px rgba(107,15,43,0.3);
+  position:relative;
+  overflow:hidden;
+}
+.order-btn::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);
+  opacity:0;
+  transition:opacity .2s;
+}
+.order-btn:hover{
+  box-shadow:0 8px 28px rgba(107,15,43,0.45);
+  transform:translateY(-1px);
+}
+.order-btn:hover::after{opacity:1}
+.order-btn:active{transform:scale(0.98)}
+
+/* SUCCESS STATE */
+.order-success{
+  text-align:center;
+  padding:30px 20px;
+  animation:fadeUp .4s ease;
+}
+.order-success .check-icon{
+  width:64px;height:64px;
+  background:linear-gradient(135deg,#4CAF50,#2E7D32);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;
+  margin:0 auto 16px;
+  box-shadow:0 8px 24px rgba(46,125,50,0.3);
+  animation:popIn .4s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn{from{transform:scale(0)}to{transform:scale(1)}}
+.order-success h4{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;
+  color:var(--text);
+  margin-bottom:6px;
+}
+.order-success p{font-size:.82rem;color:var(--text2);line-height:1.6}
+
+.empty-cart{
+  text-align:center;
+  padding:50px 20px;
+  color:var(--taupe);
+}
+.empty-cart .icon{
+  font-size:3.5rem;
+  margin-bottom:14px;
+  opacity:.5;
+  display:block;
+}
+.empty-cart p{font-size:.88rem;letter-spacing:.04em}
+
+/* INFO BAR */
+.info-bar{
+  background:var(--espresso);
+  color:rgba(255,240,235,0.7);
+  padding:22px 24px;
+  font-size:.8rem;
+  letter-spacing:.04em;
+}
+.info-inner{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px 32px;
+  justify-content:center;
+  align-items:center;
+}
+.info-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.info-item a{color:var(--blush);text-decoration:none;transition:color .2s}
+.info-item a:hover{color:var(--petal)}
+
+/* LOADER */
+.loader{
+  text-align:center;
+  padding:80px 20px;
+  color:var(--taupe);
+  font-size:.95rem;
+}
+.loader-dots{
+  display:flex;gap:6px;justify-content:center;margin:20px 0;
+}
+.loader-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--rose);
+  animation:dot-bounce 1.2s ease infinite;
+}
+.loader-dot:nth-child(2){animation-delay:.2s}
+.loader-dot:nth-child(3){animation-delay:.4s}
+@keyframes dot-bounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1.2);opacity:1}}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:100px;
+  right:24px;
+  background:var(--espresso);
+  color:#fff;
+  padding:10px 18px;
+  border-radius:50px;
+  font-size:.8rem;
+  font-weight:500;
+  letter-spacing:.05em;
+  z-index:400;
+  pointer-events:none;
+  opacity:0;
+  transform:translateY(10px);
+  transition:all .3s cubic-bezier(.4,0,.2,1);
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero{min-height:320px;padding:55px 16px 50px}
+  .hero h1{font-size:clamp(2.2rem,9vw,3.5rem)}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:14px 16px 80px}
+  .card-img-wrap{height:150px}
+  .card-body{padding:13px 14px 15px;gap:7px}
+  .card-name{font-size:1rem}
+  .card-desc{font-size:.73rem;-webkit-line-clamp:2;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical}
+  .price{font-size:1.1rem}
+  .add-btn{width:34px;height:34px;font-size:1.2rem}
+  .cats{padding:14px 16px;gap:7px}
+  .cat-btn{padding:8px 16px;font-size:.76rem}
+  .cart-fab{bottom:20px;right:16px;padding:12px 20px;font-size:.82rem}
+  .sec-head{padding:36px 16px 12px}
+  .sec-head h2{font-size:1.5rem}
+  .info-inner{gap:10px 20px;font-size:.75rem}
+  .drawer{width:100vw}
+  .lb-inner{border-radius:var(--r1)}
+  .lb-info{padding:14px 16px 18px}
+}
+
+@media(max-width:400px){
+  .grid{grid-template-columns:1fr 1fr;gap:12px;padding:12px 12px 80px}
+  .card-img-wrap{height:130px}
+  .card-body{padding:11px 12px 13px}
+}
+@media(min-width:769px) and (max-width:1024px){
+  .grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+@media(min-width:1200px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-pattern"></div>
+
+  <div class="hero-badge">✦ CHORTOQ ✦</div>
+
+  <!-- LOGO -->
+  <div class="hero-logo">
+    <img src="logo.svg" alt="Tort House Logo">
+  </div>
+
+  <h1>TORT <em><strong>HOUSE</strong></em></h1>
+  <p class="hero-sub">Mehr bilan tayyorlangan</p>
+
+  <div class="hero-divider">✦</div>
+
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,40 C240,0 480,60 720,30 C960,0 1200,50 1440,20 L1440,60 L0,60 Z" fill="#FDF4EF"/>
+    </svg>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="cats" id="catsNav">
+  <button class="cat-btn active" data-cat="all">✦ Barchasi</button>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+  <div class="loader">
+    <div class="loader-dots">
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+      <div class="loader-dot"></div>
+    </div>
+    Yuklanmoqda...
+  </div>
+</main>
+
+<!-- INFO -->
+<footer class="info-bar">
+  <div class="info-inner">
+    <span class="info-item">📍 Toshkent, Yunusobod tumani</span>
+    <span class="info-item">📞 <a href="tel:+998900000000">+998 90 000 00 00</a></span>
+    <span class="info-item">📸 <a href="#" target="_blank">@torthouse.uz</a></span>
+    <span class="info-item">⏰ 09:00 – 21:00</span>
+  </div>
+</footer>
+
+<!-- CART FAB -->
+<button class="cart-fab" id="cartFab" onclick="openCart()">
+  🛒 Savat
+  <span class="cart-count" id="cartCount">0</span>
+</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <button class="close-btn" onclick="closeCart()">✕</button>
+    <h3>Savatcha</h3>
+    <p>Tanlangan mahsulotlar</p>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot" id="drawerFoot" style="display:none">
+    <div class="total-row">
+      <span class="total-label">Jami summa</span>
+      <span class="total-sum" id="totalPrice">0</span>
+    </div>
+    <button class="order-btn" onclick="order()">✓ Buyurtma berish</button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="if(event.target===this)closeLb()">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLb()">✕</button>
+    <div class="lb-media" id="lbMedia"></div>
+    <div class="lb-thumbs" id="lbThumbs"></div>
+    <div class="lb-info">
+      <div class="lb-name" id="lbName"></div>
+      <div class="lb-desc" id="lbDesc"></div>
+      <div class="lb-footer">
+        <div class="lb-price" id="lbPrice"></div>
+        <button class="lb-add" id="lbAddBtn">+ Savatga</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = '/api/mahsulotlar';
+const CATS_MAP = {
+  tortlar:'🎂 Tortlar',
+  pirojenalar:'🍰 Pirojenalar',
+  donutlar:'🍩 Donutlar',
+  ichimliklar:'☕ Ichimliklar'
+};
+const ICONS = {tortlar:'🎂',pirojenalar:'🍰',donutlar:'🍩',ichimliklar:'☕'};
+const CAT_DESC = {
+  tortlar:'Maxsus tayyorlangan, ajoyib bezakli tortlar',
+  pirojenalar:'Nafis va mayin pirojenalar',
+  donutlar:'Rang-barang va shirinlikka to\'la donutlar',
+  ichimliklar:'Issiq va sovuq ichimliklar'
+};
+
+let allItems = [], activeCat = 'all', cart = {}, lbCurrentId = null;
+
+function fmt(n){ return Number(n).toLocaleString('uz-UZ') + " so'm"; }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+async function load(){
+  try{
+    const r = await fetch(API);
+    allItems = await r.json();
+    allItems = allItems.filter(i => i.mavjud !== false && i.mavjud !== 'false' && i.mavjud !== 0);
+    buildCats();
+    render();
+  } catch(e) {
+    // Demo mode: use sample data
+    allItems = getDemoData();
+    buildCats();
+    render();
+  }
+}
+
+
+
+function buildCats(){
+  const nav = document.getElementById('catsNav');
+  nav.innerHTML = '<button class="cat-btn active" data-cat="all">✦ Barchasi</button>';
+  const cats = [...new Set(allItems.map(i=>i.kategoriya))];
+  cats.forEach(c=>{
+    const btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.dataset.cat = c;
+    btn.textContent = CATS_MAP[c] || c;
+    nav.appendChild(btn);
+  });
+  nav.querySelectorAll('.cat-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      nav.querySelectorAll('.cat-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      activeCat = b.dataset.cat;
+      render();
+      window.scrollTo({top:nav.offsetTop - 10,behavior:'smooth'});
+    });
+  });
+}
+
+function render(){
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+  const cats = activeCat === 'all' ? [...new Set(allItems.map(i=>i.kategoriya))] : [activeCat];
+  if(!cats.length){ main.innerHTML='<div class="loader">Mahsulot topilmadi</div>'; return; }
+  cats.forEach(cat=>{
+    const items = allItems.filter(i=>i.kategoriya===cat);
+    if(!items.length) return;
+    const sec = document.createElement('section');
+    sec.innerHTML = `
+      <div class="sec-head">
+        <div class="sec-head-inner">
+          <p class="sec-label">${items.length} ta mahsulot</p>
+          <h2>${CATS_MAP[cat]||cat}</h2>
+          <div class="sec-ornament">✦ ${CAT_DESC[cat]||''} ✦</div>
+        </div>
+      </div>
+      <div class="grid">${items.map((item,idx)=>cardHtml(item,idx)).join('')}</div>`;
+    main.appendChild(sec);
+  });
+}
+
+function cardHtml(item, idx){
+  const imgs = item.rasmlar ? item.rasmlar.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  const firstImg = imgs[0];
+  const mediaHtml = firstImg
+    ? `<img src="${firstImg}" alt="${item.nomi}" loading="lazy">`
+    : `<div class="card-emoji">${ICONS[item.kategoriya]||'🎂'}</div>`;
+  const inCart = cart[item.id] > 0;
+  return `<div class="card${inCart?' in-cart':''}" id="card-${item.id}" style="animation-delay:${idx*.05}s">
+    <div class="card-img-wrap" onclick="openLb(${item.id})">
+      ${mediaHtml}
+      ${item.kategoriya==='tortlar'?'<span class="card-tag">🎂 Tort</span>':''}
+      ${!item.mavjud||item.mavjud==='false'?'<span class="unavail-badge">Mavjud emas</span>':''}
+    </div>
+    <div class="card-body">
+      <div class="card-name">${item.nomi}</div>
+      ${item.tavsif?`<div class="card-desc">${item.tavsif}</div>`:''}
+      ${item.porsiya?`<div class="card-porsiya">📦 ${item.porsiya}</div>`:''}
+      <div class="card-footer">
+        <div>
+          <div class="price">${fmt(item.narxi)}</div>
+        </div>
+        <button class="add-btn" onclick="addCart(${item.id},event)" ${!item.mavjud||item.mavjud==='false'?'disabled':''} aria-label="Savatga qo'shish">+</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// LIGHTBOX
+function openLb(id){
+  lbCurrentId = id;
+  const item = allItems.find(i=>String(i.id)===String(id));
+  if(!item) return;
+  const imgs = item.rasmlar ? item.rasmlar.split(',').map(s=>s.trim()).filter(Boolean) : [];
+  const media = document.getElementById('lbMedia');
+  const thumbs = document.getElementById('lbThumbs');
+
+  function showImg(src){
+    media.innerHTML = `<img src="${src}" alt="${item.nomi}">`;
+  }
+  function showVid(src){
+    media.innerHTML = `<video src="${src}" controls autoplay></video>`;
+  }
+
+  thumbs.innerHTML = '';
+  if(imgs.length){
+    showImg(imgs[0]);
+    if(imgs.length > 1){
+      imgs.forEach((src,i)=>{
+        const th = document.createElement('img');
+        th.src=src; th.className='lb-thumb'+(i===0?' active':'');
+        th.onclick=()=>{thumbs.querySelectorAll('.lb-thumb,.lb-thumb-vid').forEach(x=>x.classList.remove('active'));th.classList.add('active');showImg(src);};
+        thumbs.appendChild(th);
+      });
+      if(item.video){
+        const vb=document.createElement('div');
+        vb.className='lb-thumb-vid';vb.textContent='▶';
+        vb.onclick=()=>{thumbs.querySelectorAll('.lb-thumb,.lb-thumb-vid').forEach(x=>x.classList.remove('active'));vb.classList.add('active');showVid(item.video);};
+        thumbs.appendChild(vb);
+      }
+    }
+  } else if(item.video){
+    showVid(item.video);
+  } else {
+    media.innerHTML=`<div style="text-align:center;font-size:6rem;padding:50px 20px;background:var(--linen)">${ICONS[item.kategoriya]||'🎂'}</div>`;
+  }
+
+  document.getElementById('lbName').textContent = item.nomi;
+  document.getElementById('lbDesc').textContent = item.tavsif || '';
+  document.getElementById('lbPrice').textContent = fmt(item.narxi);
+  document.getElementById('lbAddBtn').onclick = ()=>{ addCart(id); closeLb(); };
+  document.getElementById('lbAddBtn').style.display = (item.mavjud===false||item.mavjud==='false') ? 'none' : '';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb(){
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// CART
+function addCart(id, e){
+  if(e) e.stopPropagation();
+  cart[id] = (cart[id]||0) + 1;
+  updateFab();
+  updateCardState(id);
+  const item = allItems.find(i=>String(i.id)===String(id));
+  showToast('🛒 ' + (item ? item.nomi : 'Mahsulot') + ' savatga qo\'shildi');
+  if(document.getElementById('drawer').classList.contains('open')) renderCart();
+}
+function removeCart(id){
+  if(!cart[id]) return;
+  cart[id]--;
+  if(!cart[id]) delete cart[id];
+  updateFab();
+  updateCardState(id);
+  renderCart();
+}
+function updateCardState(id){
+  const card = document.getElementById('card-'+id);
+  if(card){
+    if(cart[id] > 0) card.classList.add('in-cart');
+    else card.classList.remove('in-cart');
+  }
+}
+function updateFab(){
+  const t = Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartCount').textContent = t;
+  document.getElementById('cartFab').style.display = t ? 'flex' : 'none';
+}
+function openCart(){
+  renderCart();
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCart(){
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function renderCart(){
+  const el = document.getElementById('drawerItems');
+  const foot = document.getElementById('drawerFoot');
+  const ids = Object.keys(cart);
+  if(!ids.length){
+    el.innerHTML='<div class="empty-cart"><span class="icon">🛒</span><p>Savat hali bo\'sh</p></div>';
+    foot.style.display='none';
+    return;
+  }
+  let total=0;
+  el.innerHTML = ids.map(id=>{
+    const item = allItems.find(i=>String(i.id)===String(id));
+    if(!item) return '';
+    total += item.narxi * cart[id];
+    const imgs = item.rasmlar ? item.rasmlar.split(',').map(s=>s.trim()).filter(Boolean) : [];
+    const thumb = imgs[0] ? `<img src="${imgs[0]}" alt="${item.nomi}">` : (ICONS[item.kategoriya]||'🎂');
+    return `<div class="cart-item">
+      <div class="ci-thumb">${typeof thumb==='string'&&thumb.startsWith('<img')?thumb:thumb}</div>
+      <div class="ci-info">
+        <div class="ci-name">${item.nomi}</div>
+        <div class="ci-price">${fmt(item.narxi)}</div>
+      </div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="removeCart(${id})">−</button>
+        <span class="qty-val">${cart[id]}</span>
+        <button class="qty-btn" onclick="addCart(${id})">+</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('totalPrice').textContent = fmt(total);
+  foot.style.display='block';
+}
+
+function order(){
+  // Clear cart and show success
+  cart = {};
+  updateFab();
+  
+  const el = document.getElementById('drawerItems');
+  const foot = document.getElementById('drawerFoot');
+  foot.style.display='none';
+  
+  // Reset card states
+  allItems.forEach(item => {
+    const card = document.getElementById('card-'+item.id);
+    if(card) card.classList.remove('in-cart');
+  });
+  
+  el.innerHTML = `<div class="order-success">
+    <div class="check-icon">✓</div>
+    <h4>Buyurtma qabul qilindi!</h4>
+    <p>Tez orada siz bilan bog'lanamiz.<br>Mahsulotingizni tayyorlab qo'yamiz 🎂</p>
+  </div>`;
+  
+  // Auto close after 2.5s
+  setTimeout(()=>{
+    closeCart();
+    setTimeout(()=>{
+      el.innerHTML='<div class="empty-cart"><span class="icon">🛒</span><p>Savat hali bo\'sh</p></div>';
+    },400);
+  }, 2600);
+}
+
+// Keyboard close
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    closeLb();
+    closeCart();
+  }
+});
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "torthouse",
+  "version": "1.0.0",
+  "description": "## Loyiha tuzilishi ``` torthouse/ ├── server.js          ← Express backend ├── package.json ├── .env.example       ← muhit o'zgaruvchilari namunasi ├── data/ │   └── mahsulotlar.xlsx  ← avtomatik yaratiladi └── public/     ├── index.html     ← Mijozlar uchun menyu sayt     └── admin.html     ← Admin panel ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^4.22.1",
+    "multer": "^2.1.1",
+    "xlsx": "^0.18.5"
+  }
+}
